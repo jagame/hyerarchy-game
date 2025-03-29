@@ -7,10 +7,12 @@ import com.jagame.game.api.Player;
 import java.util.List;
 
 public class ExampleGameFactory implements GameFactory.Closeable {
+
     @Override
     public Game<?> newGameInstance() {
-        return new Game<Player>() {
+        return new Game<>() {
             @Override
+            @SuppressWarnings("java:S106")
             protected RunStatus runRound(List<Player> players) {
                 System.out.println("Only a example game that nothing does");
                 return RunStatus.FINISH;
