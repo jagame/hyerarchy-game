@@ -2,6 +2,7 @@ package com.jagame.game.api;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class GameFactoryRegistry implements Iterable<GameFactory>, AutoCloseable {
@@ -10,6 +11,9 @@ public final class GameFactoryRegistry implements Iterable<GameFactory>, AutoClo
 
     public GameFactoryRegistry() {
         this.registeredGameFactories = new ConcurrentHashMap<>();
+        ServiceLoader.load(GameFactory.Closeable.class).forEach(gameFactory ->
+            registeredGameFactories.put(gameFactory.getClass().getCanonicalName(), gameFactory)
+        );
     }
 
     /**
